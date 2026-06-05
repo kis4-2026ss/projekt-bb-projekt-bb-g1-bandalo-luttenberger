@@ -514,9 +514,11 @@ guardrail.yaml       <span class="comment">← example policy</span></div>
           </div></li>
           <li><div class="step-num">14</div><div class="step-text">Add <code>ruff</code> config to <code>pyproject.toml</code>, add <code>.gitignore</code></div></li>
           <li><div class="step-num">15</div><div class="step-text">
-            Write <code>scripts/pi_deploy.sh</code> — use after every push:
+            Write <code>scripts/pi_deploy.sh</code> — run in a Pi terminal (via RustDesk) after every push:
             <pre>#!/bin/bash
-ssh pi@&lt;ip&gt; "cd ~/guardrail && git pull && uv sync"</pre>
+cd ~/guardrail
+git pull
+~/.local/bin/uv sync</pre>
           </div></li>
           <li><div class="step-num">16</div><div class="step-text">
             Set up GitHub Actions CI (<code>.github/workflows/ci.yml</code>) — runs <code>ruff check</code> + <code>pytest</code> on every push
@@ -710,8 +712,8 @@ guardrail = "guardrail.report:main"</pre>
       <div class="phase-body">
         <ul class="steps">
           <li><div class="step-num">28</div><div class="step-text">
-            Create <code>scripts/setup_sandbox.sh</code> — run on the Pi via SSH:
-            <pre>ssh pi@&lt;ip&gt; "bash ~/guardrail/scripts/setup_sandbox.sh"</pre>
+            Create <code>scripts/setup_sandbox.sh</code> — run in a Pi terminal (via RustDesk):
+            <pre>bash ~/guardrail/scripts/setup_sandbox.sh</pre>
             Creates the following tree on the Pi:
             <div class="filetree">~/sandbox/
   project/
@@ -921,8 +923,8 @@ guardrail = "guardrail.report:main"</pre>
           <li>
             <div class="trouble-icon">🌐</div>
             <div class="trouble-content">
-              <strong>Pi not reachable</strong>
-              <span>Set a static IP or use <code>pi.local</code> hostname. Add to <code>/etc/hosts</code> on your dev machine if needed.</span>
+              <strong>Pi not reachable via RustDesk</strong>
+              <span>Check that the Pi is online and the RustDesk daemon is running: <code>systemctl status rustdesk</code></span>
             </div>
           </li>
           <li>

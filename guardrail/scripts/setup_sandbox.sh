@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run on the Pi: bash ~/guardrail/scripts/setup_sandbox.sh
+# Run this in a terminal on the Pi (via RustDesk): bash ~/guardrail/scripts/setup_sandbox.sh
 set -e
 BASE=~/sandbox
 

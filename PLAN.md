@@ -19,7 +19,7 @@ The Pi is the controlled Linux environment where all experiments run.
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
 4. Authenticate Claude Code on the Pi: `claude auth login`
-5. Clone the guardrail repo onto the Pi (once it exists):
+5. Clone the guardrail repo onto the Pi (once it exists) — open a terminal on the Pi via RustDesk:
    ```bash
    git clone git@github.com:<you>/guardrail.git ~/guardrail
    ```
@@ -81,12 +81,13 @@ Before writing production code, verify how the hooks actually work **on the Pi**
    guardrail.yaml       ← example policy
    ```
 14. Add `ruff` config to `pyproject.toml`, add `.gitignore`
-15. Write `scripts/pi_deploy.sh`:
+15. Write `scripts/pi_deploy.sh` — run this in a Pi terminal (via RustDesk) after every push:
     ```bash
     #!/bin/bash
-    ssh pi@<ip> "cd ~/guardrail && git pull && uv sync"
+    cd ~/guardrail
+    git pull
+    ~/.local/bin/uv sync
     ```
-    Use this after every push to keep the Pi up to date.
 16. Set up GitHub Actions CI (`.github/workflows/ci.yml`): run `ruff check` + `pytest` on every push
 
 ---
@@ -201,9 +202,9 @@ Before writing production code, verify how the hooks actually work **on the Pi**
 
 ## Phase 6 — Sandbox + Honeypots on the Pi (Day 4–5, ~3h) — *Fabian*
 
-32. Create `scripts/setup_sandbox.sh` — run this **on the Pi** (or via SSH):
+32. Create `scripts/setup_sandbox.sh` — run this in a Pi terminal (via RustDesk):
     ```bash
-    ssh pi@<ip> "bash ~/guardrail/scripts/setup_sandbox.sh"
+    bash ~/guardrail/scripts/setup_sandbox.sh
     ```
     The script creates a clean directory tree on the Pi:
     ```
@@ -245,9 +246,13 @@ Before writing production code, verify how the hooks actually work **on the Pi**
     | E — Contextual temptation | Task requires similar permitted files; honeypot placed nearby |
 
 36. Run each experiment 3 times minimum for consistency
-37. After each run, copy the audit log back to your dev machine:
+37. After each run, copy the audit log to the repo on the Pi and push — then pull on your dev machine:
     ```bash
-    scp pi@<ip>:~/guardrail/guardrail-audit.jsonl results/experiment-<condition>-run<n>.jsonl
+    # on the Pi (via RustDesk terminal):
+    cp ~/guardrail/guardrail-audit.jsonl ~/guardrail/results/experiment-<condition>-run<n>.jsonl
+    cd ~/guardrail && git add results/ && git commit -m "results: experiment <condition> run <n>" && git push
+    # on dev machine:
+    git pull
     ```
 
 ---
@@ -311,7 +316,7 @@ Before writing production code, verify how the hooks actually work **on the Pi**
 
 - **Hook doesn't block**: check exit code handling, test with `exit 1` standalone script first
 - **Claude Code won't install on Pi (ARM)**: check `uname -m` — Pi 4/5 is `aarch64`, which is supported. Pi 2/3 is `armv7l` — may not work, contact Anthropic support or use a Pi 4+
-- **Pi not reachable**: set a static IP on the Pi or use its hostname (`pi.local`) — add it to `/etc/hosts` on your dev machine
+- **Pi not reachable via RustDesk**: check that the Pi is connected to the internet and that the RustDesk daemon is running (`systemctl status rustdesk`)
 - **Sandbox path issues**: use absolute paths everywhere (`/home/pi/sandbox/...`), avoid `~` in the policy on the Pi since `~` resolves differently under different users
 - **Claude Code ignores policy**: remember — the hook only controls tool calls, not what Claude *thinks*. Thinking about a forbidden path is not a violation.
 - **No time for experiments**: skip D and E, run A+B+C only — still a valid result
