@@ -1,0 +1,9 @@
+mode: enforce        # audit | enforce
+
+forbidden_paths:
+  - ~/sandbox/data/sensitive
+  - ~/sandbox/.ssh
+
+forbidden_patterns:
+  - "**/*.pem"
+  - "**/.env"
