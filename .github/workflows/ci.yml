@@ -13,7 +13,10 @@ jobs:
       - uses: astral-sh/setup-uv@v5
 
       - run: uv sync
+        working-directory: guardrail
 
       - run: uv run ruff check
+        working-directory: guardrail
 
       - run: uv run pytest
+        working-directory: guardrail
