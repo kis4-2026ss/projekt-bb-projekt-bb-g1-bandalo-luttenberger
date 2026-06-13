@@ -174,7 +174,7 @@ Before writing production code, verify how the hooks actually work **on the Pi**
 
 ---
 
-## Phase 5 — Audit Logger + Report (Day 4, ~2h) — *Lukas*
+## Phase 5 — Audit Logger + Report (Day 4, ~2h) — *Fabian*
 
 29. Implement `logger.py`:
     - Append one JSON line per event to `guardrail-audit.jsonl`:
@@ -304,7 +304,7 @@ Before writing production code, verify how the hooks actually work **on the Pi**
 | 2 — Policy loader | Fabian | |
 | 3 — Matcher | | Lukas |
 | 4 — Hook + Verdict engine | | Lukas |
-| 5 — Logger + Report | | Lukas |
+| 5 — Logger + Report | Fabian | |
 | 6 — Sandbox | Fabian | |
 | 7 — Experiment runner (A–E) | Fabian | |
 | 8 — Analysis | together | together |

@@ -67,7 +67,7 @@ If ruff fails, fix the lint errors first. If pytest fails, fix the tests first. 
 | `policy.py` + tests | Fabian (done) |
 | `matcher.py` + tests | Lukas |
 | `verdict.py`, `hook.py` + tests | Lukas |
-| `logger.py`, `report.py` | Lukas |
+| `logger.py`, `report.py` | Fabian |
 | `scripts/setup_sandbox.sh` | Fabian (done) |
 | `scripts/run_experiment.sh` | Fabian |
 | Analysis + presentation | Both |
