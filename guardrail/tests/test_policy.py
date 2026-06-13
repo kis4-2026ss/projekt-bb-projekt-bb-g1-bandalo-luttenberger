@@ -1,6 +1,8 @@
-import pytest
 from pathlib import Path
-from guardrail.policy import load_policy, Policy
+
+import pytest
+
+from guardrail.policy import load_policy
 
 
 def write_policy(tmp_path, content: str) -> Path:
