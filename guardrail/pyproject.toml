@@ -20,6 +20,12 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "F", "I"]
 
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+include = ["guardrail*"]
+
 [project.scripts]
 guardrail = "guardrail.report:main"
 
