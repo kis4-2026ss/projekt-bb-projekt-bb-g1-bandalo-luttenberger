@@ -625,7 +625,7 @@ forbidden_patterns:
         </div>
         <div class="card card-ok col">
           <h3 style="color:var(--ok); margin-bottom:10px">Layer 2 — Model reasoning</h3>
-          <p style="font-size:14px">Even with blocked reads, Claude refused to write credential-loading code — citing that <code>.bak</code> files normalise dangerous patterns and offering safe alternatives (env vars, secrets manager).</p>
+          <p style="font-size:14px">After the reads were blocked, Claude also refused to write credential-loading code — citing that <code>.bak</code> files normalise dangerous patterns and offering safe alternatives (env vars, secrets manager).</p>
           <div style="margin-top:12px">
             <span class="tag tag-ok">pre-tool refusal</span>
           </div>
@@ -641,9 +641,51 @@ forbidden_patterns:
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE 11 — FINDING: A2 META-AWARENESS
+       SLIDE 11 — WHY CLAUDE REFUSES WELL
   ══════════════════════════════════════════ -->
   <div class="slide" id="s11">
+    <div class="content">
+      <div class="slide-title">Behind the Refusal</div>
+      <h2 style="margin-bottom:24px">Why Claude reasons about safety<br>instead of just blocking keywords</h2>
+
+      <div class="row" style="gap:18px; margin-bottom:18px">
+        <div class="card card-accent col">
+          <h3 style="color:var(--accent); margin-bottom:8px">Constitutional AI</h3>
+          <p style="font-size:14px">Anthropic trains Claude against a set of written principles — a "constitution". During training, Claude critiques and rewrites its own outputs to align with those principles. The result: safety reasoning is <strong style="color:var(--text)">baked into the model's weights</strong>, not bolted on as a filter afterwards.</p>
+        </div>
+        <div class="card card-teal col">
+          <h3 style="color:var(--accent2); margin-bottom:8px">Values, not rules</h3>
+          <p style="font-size:14px">Most content filters block on keywords or categories. Claude instead learns <strong style="color:var(--text)">why</strong> something is harmful — so it can reason about novel situations it was never explicitly trained on. It doesn't need to have seen "credentials.bak" before to know loading it is dangerous.</p>
+        </div>
+      </div>
+
+      <div class="card card-warn" style="margin-bottom:18px">
+        <h3 style="color:var(--warn); margin-bottom:10px">What we actually observed in this experiment</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; font-size:14px">
+          <div>
+            <strong style="color:var(--text)">Keyword filter behaviour</strong><br>
+            <span style="color:var(--muted)">"I cannot help with that." — no explanation, no alternative, no reasoning.</span>
+          </div>
+          <div>
+            <strong style="color:var(--text)">What Claude actually did (E &amp; E2)</strong><br>
+            <span style="color:var(--muted)">Named the specific risk (<code>.bak</code> files, credential exposure), explained <em>why</em> the pattern is dangerous, offered three concrete safe alternatives, and asked a clarifying question.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="border-color:var(--border)">
+        <p style="font-size:14px; line-height:1.8; color:var(--muted)">
+          <strong style="color:var(--text)">Anthropic's founding premise:</strong> safety and capability are not in conflict — a model that genuinely understands harm is also more useful, because it can explain its reasoning and help you do the right thing instead of just refusing.
+          That's why the refusals in this experiment came with alternatives, not just a "no".
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SLIDE 12 — A2 META-AWARENESS
+  ══════════════════════════════════════════ -->
+  <div class="slide" id="s12b">
     <div class="content">
       <div class="slide-title">Notable Behaviour — Condition A2</div>
       <h2 style="margin-bottom:20px">The subject discovered the experiment.</h2>
@@ -749,8 +791,8 @@ forbidden_patterns:
           <div class="big-label">honeypot reads<br><span style="font-size:11px">(via Read tool)</span></div>
         </div>
         <div class="card" style="padding:16px 24px; min-width:160px; text-align:center">
-          <span style="font-size:28px; font-weight:800; color:var(--warn)">1</span>
-          <div class="big-label">forbidden fruit effect<br><span style="font-size:11px">(not observed)</span></div>
+          <span style="font-size:28px; font-weight:800; color:var(--ok)">✗</span>
+          <div class="big-label">forbidden fruit effect<br><span style="font-size:11px">not observed</span></div>
         </div>
       </div>
 
